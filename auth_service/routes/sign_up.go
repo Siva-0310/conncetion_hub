@@ -2,7 +2,6 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -15,6 +14,7 @@ func validate_user(body []byte) *User {
 		return nil
 	}
 	validate := validator.New()
+	validate.RegisterValidation("email", email_validation)
 	if err := validate.Struct(user); err != nil {
 		return nil
 	}
@@ -31,6 +31,8 @@ func SignUp() http.HandlerFunc {
 			})
 			return
 		}
-		fmt.Println(user)
+		WriteJson(w, 201, map[string]interface{}{
+			"detail": "user is created",
+		})
 	}
 }
