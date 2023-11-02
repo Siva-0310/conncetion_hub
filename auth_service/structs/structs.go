@@ -1,4 +1,4 @@
-package routes
+package structs
 
 type User struct {
 	User_name     string `json:"user_name" validate:"required"`
