@@ -35,6 +35,7 @@ func SignUp() http.HandlerFunc {
 			return
 		}
 		db := database.CreateConnection()
+		defer db.Close()
 		if db == nil {
 			ServerError(w)
 			return
@@ -44,9 +45,17 @@ func SignUp() http.HandlerFunc {
 			ServerError(w)
 			return
 		}
+		defer tx.Rollback()
 		id := database.ResgisterUser(user, tx)
+		if id == -2 {
+			WriteJson(w, 409, map[string]interface{}{
+				"detail": "email already exists",
+			})
+			return
+		}
 		if id == -1 {
 			ServerError(w)
+			return
 		}
 		tx.Commit()
 		WriteJson(w, 201, map[string]interface{}{

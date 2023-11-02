@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"os"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-var connection_string string = os.Getenv("MY_SQL_USER") + ":" + os.Getenv("MY_SQL_PASS") + "@tcp(127.0.0.1:3306)/microbloggs"
+var connection_string string = os.Getenv("MY_SQL_USER") + ":" + os.Getenv("MY_SQL_PASS") + "@tcp(db:3306)/microbloggs"
 
 func CreateConnection() *sql.DB {
 	maxTries := 3
@@ -16,7 +18,7 @@ func CreateConnection() *sql.DB {
 			time.Sleep(time.Duration(time.Second * 5))
 			continue
 		}
-		if db.Ping() == nil {
+		if err := db.Ping(); err == nil {
 			return db
 		}
 		time.Sleep(time.Duration(time.Second * 5))

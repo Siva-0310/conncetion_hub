@@ -11,12 +11,12 @@ services:
     db:
       image: mysql:latest
       environment:
-        - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+        - MYSQL_ROOT_PASSWORD=password
         - MYSQL_USER=user 
         - MYSQL_PASSWORD=password 
         - MYSQL_DATABASE=microbloggs
       volumes:
-      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./db.sql:/docker-entrypoint-initdb.d/1.sql
       ports:
         - "3306:3306"
       expose:
