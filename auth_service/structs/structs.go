@@ -5,3 +5,8 @@ type User struct {
 	User_email    string `json:"user_email" validate:"required,email"`
 	User_password string `json:"user_password" validate:"required,min=8"`
 }
+
+type Credentials struct {
+	User_email    string `json:"user_email" validate:"required,email"`
+	User_password string `json:"user_password" validate:"required,min=8"`
+}

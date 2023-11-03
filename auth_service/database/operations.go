@@ -21,3 +21,22 @@ func ResgisterUser(user *structs.User, tx *sql.Tx) int64 {
 	}
 	return -1
 }
+func SearchUser(cred *structs.Credentials, db *sql.DB) int64 {
+	sql_statement := "SELECT user_id,user_password FROM users WHERE user_email = ?"
+	res := db.QueryRow(sql_statement, cred.User_email)
+	var (
+		user_id       int64
+		user_password string
+	)
+	if res.Err() != nil {
+		return -1
+	}
+	err := res.Scan(&user_id, &user_password)
+	if err != nil && err.Error() == "sql: no rows in result set" {
+		return -3
+	}
+	if user_password != cred.User_password {
+		return -2
+	}
+	return user_id
+}

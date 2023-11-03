@@ -13,6 +13,7 @@ func Main() {
 	r.Use(middleware.AllowContentType("application/json"))
 	r.Use(middleware.Logger)
 	r.Post("/sign_up", routes.SignUp())
+	r.Post("/sign_in", routes.SignIn())
 	server := http.Server{
 		Addr:    "0.0.0.0:8000",
 		Handler: r,
