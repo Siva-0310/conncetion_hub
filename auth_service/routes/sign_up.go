@@ -57,9 +57,14 @@ func SignUp() http.HandlerFunc {
 			ServerError(w)
 			return
 		}
+		token := create_jwt(id)
+		if token == "" {
+			ServerError(w)
+			return
+		}
 		tx.Commit()
 		WriteJson(w, 201, map[string]interface{}{
-			"detail": "user is created",
+			"token": token,
 		})
 	}
 }

@@ -56,8 +56,13 @@ func SignIn() func(http.ResponseWriter, *http.Request) {
 			ServerError(w)
 			return
 		}
+		token := create_jwt(id)
+		if token == "" {
+			ServerError(w)
+			return
+		}
 		WriteJson(w, 200, map[string]interface{}{
-			"detail": "hello",
+			"token": token,
 		})
 	}
 }
