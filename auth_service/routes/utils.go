@@ -31,6 +31,7 @@ func email_validation(email validator.FieldLevel) bool {
 func create_jwt(id int64) string {
 	KEY := []byte("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
 	algo := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"id":  id,
 		"exp": time.Now().Add(time.Hour).Unix(),
 	})
 	if ans, err := algo.SignedString(KEY); err == nil {

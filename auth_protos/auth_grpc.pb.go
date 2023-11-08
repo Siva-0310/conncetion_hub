@@ -4,7 +4,7 @@
 // - protoc             v3.12.4
 // source: auth_protos/auth.proto
 
-package conncetion_hub
+package auth_protos
 
 import (
 	context "context"

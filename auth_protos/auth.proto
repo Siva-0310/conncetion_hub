@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth_protos;
 
-option go_package = "https://github.com/Siva-0310/conncetion_hub";
+option go_package = "connection_hub/auth_protos";
 
 service Auth{
     rpc CheckUser (JwtToken) returns (UserId){}
