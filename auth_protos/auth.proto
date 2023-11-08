@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package auth_protos;
+
+option go_package = "https://github.com/Siva-0310/conncetion_hub";
+
+service Auth{
+    rpc CheckUser (JwtToken) returns (UserId){}
+}
+
+message JwtToken {
+    string jwt = 1;
+}
+
+message UserId {
+    int64 id = 1;
+    bool exists = 2;
+}
