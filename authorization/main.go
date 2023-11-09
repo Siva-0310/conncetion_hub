@@ -1,4 +1,4 @@
-package main
+package authorization
 
 import (
 	pb "connection_hub/auth_protos"
@@ -37,7 +37,7 @@ func (*AuthServer) CheckUser(ctx context.Context, in *pb.JwtToken) (*pb.UserId, 
 		return userId, nil
 	}
 	userId.Exists = true
-	userId.Id = claims["id"].(int64)
+	userId.Id = int64(claims["id"].(float64))
 	return userId, nil
 }
 
@@ -46,5 +46,4 @@ func Main() {
 	pb.RegisterAuthServer(grpcServer, &AuthServer{})
 	lis, _ := net.Listen("tcp", ":9000")
 	grpcServer.Serve(lis)
-
 }
