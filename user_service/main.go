@@ -18,7 +18,7 @@ const user_context_key ContextKey = "user_id"
 
 func validator(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		conn, err := grpc.Dial("localhost:9000", grpc.WithInsecure(), grpc.WithBlock())
+		conn, err := grpc.Dial("localhost:9080", grpc.WithInsecure(), grpc.WithBlock())
 		if err != nil {
 			utils.ServerError(w)
 		}
@@ -47,6 +47,6 @@ func Main() {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 
 	})
-	server := http.Server{Addr: "127.0.0.1:8080", Handler: r}
+	server := http.Server{Addr: "0.0.0.0:9000", Handler: r}
 	server.ListenAndServe()
 }

@@ -15,7 +15,7 @@ func Main() {
 	r.Post("/sign_up", routes.SignUp())
 	r.Post("/sign_in", routes.SignIn())
 	server := http.Server{
-		Addr:    "0.0.0.0:8000",
+		Addr:    "0.0.0.0:8080",
 		Handler: r,
 	}
 	server.ListenAndServe()

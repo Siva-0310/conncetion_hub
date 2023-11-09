@@ -20,5 +20,5 @@ WORKDIR /
 ENV MY_SQL_USER=user 
 ENV MY_SQL_PASS=password
 COPY --from=builder /server /server
-EXPOSE 8000
+EXPOSE 8080
 CMD [ "/server" ]
