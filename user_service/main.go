@@ -3,7 +3,6 @@ package user_service
 import (
 	"connection_hub/user_service/utils"
 	"context"
-	"fmt"
 	"net/http"
 
 	pb "connection_hub/auth_protos"
@@ -26,8 +25,16 @@ func validator(next http.Handler) http.Handler {
 		c := pb.NewAuthClient(conn)
 		token := r.Header.Get("Authorization")
 		id, err := c.CheckUser(context.Background(), &pb.JwtToken{Jwt: token})
-		fmt.Println("err", err)
-		fmt.Println("id", id.GetExists())
+		if err != nil {
+			utils.ServerError(w)
+			return
+		}
+		if !id.GetExists() {
+			utils.WriteJson(w, 404, map[string]interface{}{
+				"detail": "UnAuthorized",
+			})
+			return
+		}
 		ctx := context.WithValue(r.Context(), user_context_key, id)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})

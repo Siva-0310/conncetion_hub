@@ -6,8 +6,12 @@ RUN rm -f .gitignore
 RUN rm -f compose.yaml
 RUN rm -f db.sql 
 RUN rm -f README.md 
+RUN rm -rf auth_protos
+RUN rm -rf authorization
+RUN rm -rf user_service
 COPY go.mod /app
 COPY go.sum /app
+RUN go mod tidy
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o /server
 
