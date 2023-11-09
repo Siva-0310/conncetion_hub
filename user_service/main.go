@@ -18,7 +18,7 @@ const user_context_key ContextKey = "user_id"
 
 func validator(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		conn, err := grpc.Dial("localhost:9080", grpc.WithInsecure(), grpc.WithBlock())
+		conn, err := grpc.Dial("outh:9080", grpc.WithInsecure(), grpc.WithBlock())
 		if err != nil {
 			utils.ServerError(w)
 		}

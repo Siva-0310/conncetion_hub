@@ -1,16 +1,16 @@
 package main
 
-import authservice "connection_hub/auth_service"
+import "connection_hub/user_service"
 
 func main() {
-	go func() {
-		authservice.Main()
-	}()
 	// go func() {
-	// 	authorization.Main()
+	// authservice.Main()
 	// }()
 	// go func() {
-	// 	user_service.Main()
+	//authorization.Main()
+	// }()
+	// go func() {
+	user_service.Main()
 	// }()
 	// select {}
 }

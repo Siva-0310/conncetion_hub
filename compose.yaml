@@ -1,23 +1,29 @@
 version: '3'
 services:
-    app:
-      image: connection_hub:latest
-      ports:
-        - "8000:8000"
-      expose:
-        - "8000"
-      depends_on:
-        - db
-    db:
-      image: mysql:latest
-      environment:
-        - MYSQL_ROOT_PASSWORD=password
-        - MYSQL_USER=user 
-        - MYSQL_PASSWORD=password 
-        - MYSQL_DATABASE=microbloggs
-      volumes:
+  app:
+    image: connection_hub:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  outh:
+    image: outh:latest
+    ports:
+      - "9080:9080"
+  user_service:
+    image: user:latest
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=user 
+      - MYSQL_PASSWORD=password 
+      - MYSQL_DATABASE=microbloggs
+    volumes:
       - ./db.sql:/docker-entrypoint-initdb.d/1.sql
-      ports:
-        - "3306:3306"
-      expose:
-        - "3306"
+    ports:
+      - "3306:3306"

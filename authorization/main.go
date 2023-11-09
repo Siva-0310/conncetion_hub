@@ -44,6 +44,6 @@ func (*AuthServer) CheckUser(ctx context.Context, in *pb.JwtToken) (*pb.UserId, 
 func Main() {
 	grpcServer := grpc.NewServer()
 	pb.RegisterAuthServer(grpcServer, &AuthServer{})
-	lis, _ := net.Listen("tcp", ":9000")
+	lis, _ := net.Listen("tcp", ":9080")
 	grpcServer.Serve(lis)
 }
