@@ -4,6 +4,7 @@ import (
 	"connection_hub/user_service/utils"
 	"context"
 	"net/http"
+	"time"
 
 	pb "connection_hub/auth_protos"
 
@@ -18,13 +19,19 @@ const user_context_key ContextKey = "user_id"
 
 func validator(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		conn, err := grpc.Dial("outh:9080", grpc.WithInsecure(), grpc.WithBlock())
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+		defer cancel()
+		conn, err := grpc.DialContext(ctx, "outh:9080", grpc.WithInsecure(), grpc.WithBlock())
 		if err != nil {
 			utils.ServerError(w)
+			return
 		}
+		defer conn.Close()
 		c := pb.NewAuthClient(conn)
 		token := r.Header.Get("Authorization")
-		id, err := c.CheckUser(context.Background(), &pb.JwtToken{Jwt: token})
+		ctx, cancel = context.WithTimeout(context.Background(), time.Second*3)
+		defer cancel()
+		id, err := c.CheckUser(ctx, &pb.JwtToken{Jwt: token})
 		if err != nil {
 			utils.ServerError(w)
 			return
@@ -35,7 +42,7 @@ func validator(next http.Handler) http.Handler {
 			})
 			return
 		}
-		ctx := context.WithValue(r.Context(), user_context_key, id)
+		ctx = context.WithValue(r.Context(), user_context_key, id)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

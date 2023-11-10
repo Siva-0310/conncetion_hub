@@ -11,7 +11,7 @@ services:
     ports:
       - "9080:9080"
   user_service:
-    image: user:latest
+    image: user_service:latest
     ports:
       - "9000:9000"
     depends_on:
