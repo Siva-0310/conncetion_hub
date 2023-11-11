@@ -9,6 +9,7 @@ RUN rm -f README.md
 RUN rm -rf auth_protos
 RUN rm -rf authorization
 RUN rm -rf user_service
+RUN rm -rf logger
 COPY go.mod /app
 COPY go.sum /app
 RUN go mod tidy

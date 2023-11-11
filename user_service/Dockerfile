@@ -8,6 +8,7 @@ RUN rm -f db.sql
 RUN rm -f README.md 
 RUN rm -rf authorization
 RUN rm -rf auth_service
+RUN rm -rf logger
 COPY go.mod /app
 COPY go.sum /app
 RUN go mod tidy

@@ -1,6 +1,8 @@
 package main
 
-import "connection_hub/user_service"
+import (
+	"connection_hub/logger"
+)
 
 func main() {
 	// go func() {
@@ -10,7 +12,10 @@ func main() {
 	//authorization.Main()
 	// }()
 	// go func() {
-	user_service.Main()
+	// user_service.Main()
 	// }()
+	for {
+		logger.Main()
+	}
 	// select {}
 }

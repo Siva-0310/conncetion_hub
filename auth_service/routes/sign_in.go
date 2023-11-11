@@ -64,5 +64,8 @@ func SignIn() func(http.ResponseWriter, *http.Request) {
 		WriteJson(w, 200, map[string]interface{}{
 			"token": token,
 		})
+		go func() {
+			Send(w, r)
+		}()
 	}
 }

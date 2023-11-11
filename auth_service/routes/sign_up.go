@@ -66,5 +66,8 @@ func SignUp() http.HandlerFunc {
 		WriteJson(w, 201, map[string]interface{}{
 			"token": token,
 		})
+		go func() {
+			Send(w, r)
+		}()
 	}
 }

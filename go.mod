@@ -18,6 +18,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
+	github.com/rabbitmq/amqp091-go v1.9.0 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
