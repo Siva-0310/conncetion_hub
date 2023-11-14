@@ -11,7 +11,6 @@ import (
 func Main() {
 	r := chi.NewRouter()
 	r.Use(middleware.AllowContentType("application/json"))
-	r.Use(middleware.Logger)
 	r.Post("/sign_up", routes.SignUp())
 	r.Post("/sign_in", routes.SignIn())
 	server := http.Server{

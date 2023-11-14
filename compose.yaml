@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: connection_hub:latest
+    image: auth:latest
     ports:
       - "8080:8080"
     depends_on:
@@ -12,7 +12,7 @@ services:
     ports:
       - "9080:9080"
   user_service:
-    image: user_service:latest
+    image: user:latest
     ports:
       - "9000:9000"
     depends_on:

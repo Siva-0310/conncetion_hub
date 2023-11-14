@@ -8,9 +8,10 @@ import (
 )
 
 type Log struct {
-	Method     string `json:"method"`
-	Url        string `json:"url"`
-	StatusCode int    `json:"statuscode"`
+	Method string `json:"method"`
+	Url    string `json:"url"`
+	Status int    `json:"status"`
+	Host   string `json:"Host"`
 }
 
 func RabbitConnection() *amqp.Connection {

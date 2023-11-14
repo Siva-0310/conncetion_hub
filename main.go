@@ -1,21 +1,19 @@
 package main
 
-import (
-	"connection_hub/logger"
-)
+import authservice "connection_hub/auth_service"
 
 func main() {
 	// go func() {
-	// authservice.Main()
+	authservice.Main()
 	// }()
 	// go func() {
 	//authorization.Main()
 	// }()
 	// go func() {
-	// user_service.Main()
+	//user_service.Main()
 	// }()
-	for {
-		logger.Main()
-	}
+	// for {
+	// 	logger.Main()
+	// }
 	// select {}
 }

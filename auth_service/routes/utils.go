@@ -39,3 +39,9 @@ func create_jwt(id int64) string {
 	}
 	return ""
 }
+
+func SendLog(w http.ResponseWriter, r *http.Request, statuscode *int) {
+	go func() {
+		Send(w, r, statuscode)
+	}()
+}

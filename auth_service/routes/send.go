@@ -18,7 +18,7 @@ func RabbitConnection() *amqp.Connection {
 func RabbitChannel() {
 
 }
-func Send(w http.ResponseWriter, r *http.Request) {
+func Send(w http.ResponseWriter, r *http.Request, statuscode *int) {
 	conn := RabbitConnection()
 	if conn == nil {
 		return
@@ -35,19 +35,16 @@ func Send(w http.ResponseWriter, r *http.Request) {
 	}
 	ch.PublishWithContext(context.Background(), "", q.Name, false, false, amqp.Publishing{
 		ContentType: "text/plain",
-		Body:        Encode(w, r),
+		Body:        Encode(w, r, *statuscode),
 	})
 }
 
-func Encode(w http.ResponseWriter, r *http.Request) []byte {
+func Encode(w http.ResponseWriter, r *http.Request, statuscode int) []byte {
 	data := make(map[string]interface{})
 	data["Method"] = r.Method
 	data["Url"] = r.URL.String()
-	if sc, ok := w.(interface{ StatusCode() int }); ok {
-		data["ResponseStatus"] = sc.StatusCode()
-	} else {
-		data["ResponseStatus"] = http.StatusOK
-	}
+	data["Host"] = r.Host
+	data["Status"] = statuscode
 	bin, _ := json.Marshal(data)
 	return bin
 }
