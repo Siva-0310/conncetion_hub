@@ -23,6 +23,8 @@ func validator(next http.Handler) http.Handler {
 		defer cancel()
 		conn, err := grpc.DialContext(ctx, "outh:9080", grpc.WithInsecure(), grpc.WithBlock())
 		if err != nil {
+			status := 500
+			SendRabbit(w, r, &status)
 			utils.ServerError(w)
 			return
 		}
@@ -33,13 +35,17 @@ func validator(next http.Handler) http.Handler {
 		defer cancel()
 		id, err := c.CheckUser(ctx, &pb.JwtToken{Jwt: token})
 		if err != nil {
+			status := 500
+			SendRabbit(w, r, &status)
 			utils.ServerError(w)
 			return
 		}
 		if !id.GetExists() {
+			status := 404
 			utils.WriteJson(w, 404, map[string]interface{}{
 				"detail": "UnAuthorized",
 			})
+			SendRabbit(w, r, &status)
 			return
 		}
 		ctx = context.WithValue(r.Context(), user_context_key, id)
@@ -49,10 +55,11 @@ func validator(next http.Handler) http.Handler {
 
 func Main() {
 	r := chi.NewRouter()
-	r.Use(middleware.Logger, middleware.AllowContentType("application/json"))
+	r.Use(middleware.AllowContentType("application/json"))
 	r.Use(validator)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-
+		stauscode := 200
+		defer SendRabbit(w, r, &stauscode)
 	})
 	server := http.Server{Addr: "0.0.0.0:9000", Handler: r}
 	server.ListenAndServe()
